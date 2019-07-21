@@ -1,4 +1,5 @@
 <script>
+  import Button from "components/Button";
   import Select from "components/Select";
   import Code from "components/Code";
   import Checkbox from "components/Checkbox";
@@ -12,12 +13,13 @@
 
   let showList = false;
 
-  const items = [
-    { value: 1, text: "One" },
-    { value: 2, text: "Two" },
-    { value: 3, text: "Three" },
-    { value: 4, text: "Four" },
+  let items = [
+    { value: 1, text: "Select Item 1" },
+    { value: 2, text: "Select Item 2" },
+    { value: 3, text: "Select Item 3" },
+    { value: 4, text: "Select Item 4" },
   ];
+  $: itemsLabel = items.map(i => i.text).join(", ");
 
   let selectedItems = [];
 
@@ -39,6 +41,15 @@
 </p>
 <caption>Selected: {value1 || 'nothing'}</caption>
 <Select {label} {items} on:change={v => (value1 = v.detail)} />
+
+<p>
+Updates when the underlying items change
+</p>
+<caption>Items: {itemsLabel || 'nothing'}</caption>
+<div>
+  <Button on:click="{e => {items = [...items, { value: (items.length + 1), text: 'Select Item ' + (items.length + 1)}]}}">Add item</Button>
+</div>
+
 
 <Code code={selects} />
 

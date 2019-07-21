@@ -34,7 +34,7 @@
   export let replace = "";
 
   let showList = false;
-  let filteredItems = items;
+  $: filteredItems = items;
   let itemsProcessed = [];
 
   const props = {
