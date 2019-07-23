@@ -1,5 +1,10 @@
+<script context="module">
+  import { writable } from "svelte/store";
+  let hideAllSelectList = writable(0);
+</script>
+
 <script>
-  import { createEventDispatcher, onMount } from "svelte";
+  import { createEventDispatcher, onMount, onDestroy } from "svelte";
   import { fly } from "svelte/transition";
   import { quadOut, quadIn } from "svelte/easing";
   import List from "../List/List.svelte";
@@ -33,6 +38,26 @@
   export let add = "";
   export let remove = "";
   export let replace = "";
+
+  /*
+   * Hack until this issue to happens: https://github.com/sveltejs/svelte/issues/3091
+   */
+  // var host = eval('$$' + 'self');
+  // export function hideCurrentSelectList() {
+  //   debugger;
+  //   if (currentSelectList && currentSelectList !== host) currentSelectList.$set({showList: false});
+  //   currentSelectList = host;
+  // }
+  export function hideCurrentSelectList() {
+    debugger;
+    hideAllSelectList.set(0);
+    hideAllSelectList.set(1);
+    showList = true;
+  }
+  const unsubscribe = hideAllSelectList.subscribe(value => {
+    if (value == 1) showList = false;
+  });
+  onDestroy(unsubscribe);
 
   $: filteredItems = items;
   let itemsProcessed = [];
@@ -95,7 +120,7 @@
       {prependClasses}
       on:click={e => {
         e.stopPropagation();
-        showList = true;
+        hideCurrentSelectList();
       }}
       on:click
       on:input={filterItems}
