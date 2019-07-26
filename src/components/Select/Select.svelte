@@ -1,16 +1,16 @@
 <script context="module">
-  import { writable } from "svelte/store";
-  let hideAllSelectList = writable(0);
+  let currentSelectListHideFunction;
 </script>
 
 <script>
-  import { createEventDispatcher, onMount, onDestroy } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import { fly } from "svelte/transition";
   import { quadOut, quadIn } from "svelte/easing";
   import List from "../List/List.svelte";
   import TextField from "../TextField";
 
   export let items = [];
+  export let autoResetOnItemsChange = false;
   let className = "";
   export {className as class};
   export let value = "";
@@ -29,6 +29,7 @@
   export let noUnderline = false;
   export let wrapperClasses = "cursor-pointer relative pb-4";
   export let showList = false;
+  export let autoCloseList = false;
   export let inputWrapperClasses = i => i;
   export let appendClasses = i => i;
   export let labelClasses = i => i;
@@ -42,21 +43,17 @@
   /*
    * Hack until this issue happens: https://github.com/sveltejs/svelte/issues/3091
    */
-  // var host = eval('$$' + 'self');
-  // export function hideCurrentSelectList() {
-  //   debugger;
-  //   if (currentSelectList && currentSelectList !== host) currentSelectList.$set({showList: false});
-  //   currentSelectList = host;
-  // }
-  export function hideCurrentSelectList() {
-    hideAllSelectList.set(0);
-    hideAllSelectList.set(1);
+  export function showSelectList() {
     showList = true;
+    if (!autoCloseList) return;
+    
+    const selectListHideFunction = function() {
+      showList = false;
+    }
+    
+    if (currentSelectListHideFunction && currentSelectListHideFunction !== selectListHideFunction) currentSelectListHideFunction();
+    currentSelectListHideFunction = selectListHideFunction;
   }
-  const unsubscribe = hideAllSelectList.subscribe(value => {
-    if (value == 1) showList = false;
-  });
-  onDestroy(unsubscribe);
 
   let filteredItems = items;
   let itemsProcessed = [];
@@ -85,7 +82,11 @@
   $: itemsProcessed = process(items);
   
   let oldItems = items;
-  $: if (oldItems !== items) {
+  $: if (autoResetOnItemsChange && oldItems !== items) {
+    resetOnItemsChange();
+  }
+
+  function resetOnItemsChange() {
     filteredItems = items;
     selectedLabel = getLabel(value) || "";
     if (!selectedLabel) value = "";
@@ -128,7 +129,7 @@
       {prependClasses}
       on:click={e => {
         e.stopPropagation();
-        hideCurrentSelectList();
+        showSelectList();
       }}
       on:click
       on:input={filterItems}
