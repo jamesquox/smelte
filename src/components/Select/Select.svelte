@@ -40,7 +40,7 @@
   export let replace = "";
 
   /*
-   * Hack until this issue to happens: https://github.com/sveltejs/svelte/issues/3091
+   * Hack until this issue happens: https://github.com/sveltejs/svelte/issues/3091
    */
   // var host = eval('$$' + 'self');
   // export function hideCurrentSelectList() {
@@ -49,7 +49,6 @@
   //   currentSelectList = host;
   // }
   export function hideCurrentSelectList() {
-    debugger;
     hideAllSelectList.set(0);
     hideAllSelectList.set(1);
     showList = true;
@@ -59,7 +58,7 @@
   });
   onDestroy(unsubscribe);
 
-  $: filteredItems = items;
+  let filteredItems = items;
   let itemsProcessed = [];
 
   const props = {
@@ -85,6 +84,15 @@
 
   $: itemsProcessed = process(items);
   
+  let oldItems = items;
+  $: if (oldItems !== items) {
+    filteredItems = items;
+    selectedLabel = getLabel(value) || "";
+    if (!selectedLabel) value = "";
+    dispatch('change', value);
+    oldItems = items;
+  }
+
   onMount(() => {
     selectedLabel = getLabel(value);
   })
