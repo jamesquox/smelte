@@ -19,7 +19,7 @@
   export let asc = false;
   export let loading = false;
   export let hideProgress = false;
-  export let wrapperClasses = "rounded elevation-3 relative";
+  export let wrapperClasses = "rounded elevation-3 relative text-sm overflow-x-auto";
   export let editable = true;
   export let paginatorProps = {
     color: "gray",
@@ -52,54 +52,52 @@
 </script>
 
 <style>
-  table {
-    @apply text-sm overflow-x-auto;
+  th, td {
+    @apply p-3 font-normal text-right;
+  }
 
-    & th, & td {
-      @apply p-3 font-normal text-right;
-    }
+  th:first-child, td:first-child {
+    @apply text-left border-r;
+  }
 
-    & th:first-child, & td:first-child {
-      @apply text-left border-r;
-    }
+  th {
+    @apply text-gray-600 text-xs cursor-pointer;
+  }
 
-    & th {
-      @apply text-gray-600 text-xs cursor-pointer;
+  th .asc {
+    transform: rotate(180deg);
+  }
 
-      & .asc {
-        transform: rotate(180deg);
-      }
+  th .sort-wrapper {
+    @apply flex items-center justify-end;
+  }
 
-      & .sort-wrapper {
-        @apply flex items-center justify-end;
-      }
+  th:first-child .sort-wrapper {
+    @apply justify-start;
+  }
 
-      &:first-child .sort-wrapper {
-        @apply justify-start;
-      }
+  th .sort {
+    @apply w-4 h-4 opacity-0 transition-fast;
+  }
 
-      & .sort {
-        @apply w-4 h-4 opacity-0 transition-fast;
-      }
+  th:hover {
+    @apply text-black transition-fast;
+  }
 
-      &:hover {
-        @apply text-black transition-fast;
-        & .sort {
-          @apply opacity-100;
-        }
-      }
-    }
+  th:hover .sort {
+    @apply opacity-100;
+  }
 
-    & tr {
-      @apply border-gray-200 border-t border-b px-3;
-      &:hover {
-        @apply bg-gray-50;
-      }
+  tr {
+    @apply border-gray-200 border-t border-b px-3;
+  }
 
-      &.selected {
-        @apply bg-primary-50;
-      }
-    }
+  tr:hover {
+    @apply bg-gray-50;
+  }
+
+  tr.selected {
+    @apply bg-primary-50;
   }
 </style>
 

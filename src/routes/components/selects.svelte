@@ -1,9 +1,9 @@
 <script>
-  import Button from "components/Button";
-  import Select from "components/Select";
+  import { Select } from "smelte";
+  import { Button } from "smelte";
   import Code from "components/Code";
-  import Checkbox from "components/Checkbox";
-  import Card from "components/Card";
+  import { Checkbox } from "smelte";
+  import { Card} from "smelte";
   import selects from "examples/selects.txt";
 
   let value1 = "";
