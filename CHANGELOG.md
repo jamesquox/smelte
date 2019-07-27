@@ -1,5 +1,14 @@
 # Smelte changelog
 
+# 0.0.28
+* Add transparent variant to all colors
+* Give ripple elements transparent hover
+* Fix outlined button hover
+
+# 0.0.27
+* Add alias plugin
+* Remove postcss nesting
+
 # 0.0.26
 * Passing escaped props to text fields and buttons
 

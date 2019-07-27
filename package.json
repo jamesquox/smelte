@@ -1,7 +1,7 @@
 {
   "name": "smelte",
   "description": "UI framework for Svelte using Tailwind CSS",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "scripts": {
     "dev": "sapper dev -p 7777",
     "build": "rollup -c --config rollup-publish.config.js",
@@ -51,13 +51,13 @@
     "postcss": "^7.0.16",
     "postcss-import": "^12.0.1",
     "postcss-input-range": "^4.0.0",
-    "postcss-nesting": "^7.0.0",
     "postcss-url": "^8.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.18.2",
     "prettier-plugin-svelte": "^0.6.0",
     "prismjs": "^1.16.0",
     "rollup": "^1.0.0",
+    "rollup-plugin-alias": "^1.5.2",
     "rollup-plugin-analyzer": "^3.1.1",
     "rollup-plugin-babel": "^4.0.2",
     "rollup-plugin-bundle-size": "^1.0.3",
