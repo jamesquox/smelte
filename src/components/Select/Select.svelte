@@ -43,14 +43,12 @@
   /*
    * Hack until this issue happens: https://github.com/sveltejs/svelte/issues/3091
    */
+  const selectListHideFunction = function () {
+    showList = false;
+  }
   export function showSelectList() {
     showList = true;
     if (!autoCloseList) return;
-    
-    const selectListHideFunction = function() {
-      showList = false;
-    }
-    
     if (currentSelectListHideFunction && currentSelectListHideFunction !== selectListHideFunction) currentSelectListHideFunction();
     currentSelectListHideFunction = selectListHideFunction;
   }
