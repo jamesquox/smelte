@@ -1,8 +1,7 @@
 module.exports = {
   all: color => [
-    `ripple-${color}-500`,
-    `ripple-${color}`,
     `hover:bg-${color}-trans`,
-    `bg-${color}-trans`
+    `bg-${color}-trans`,
+    `hover:bg-${color}-transDark`
   ]
 };

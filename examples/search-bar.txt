@@ -3,7 +3,7 @@
   import { Select } from "smelte";
   import { Slider } from "smelte";
   import { Button } from "smelte";
-  import Code from "components/Code";
+  import Code from "docs/Code.svelte";
 
   import searchBar from "examples/search-bar.txt";
 
@@ -23,7 +23,7 @@
     },
     remove: 'pt-6 px-4 bg-gray-100 bg-gray-300',
     small: true,
-    iconClasses: 'text-sm absolute',
+    iconClass: 'text-sm absolute',
     wrapperClasses: (i) => i.replace('pb-6', ''),
   };
 

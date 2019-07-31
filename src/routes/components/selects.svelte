@@ -1,7 +1,7 @@
 <script>
   import { Select } from "smelte";
   import { Button } from "smelte";
-  import Code from "components/Code";
+  import Code from "docs/Code.svelte";
   import { Checkbox } from "smelte";
   import { Card} from "smelte";
   import selects from "examples/selects.txt";

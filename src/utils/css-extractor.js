@@ -16,15 +16,17 @@ function getProp(node, attr) {
   return (node.attributes.find(a => a.name === attr) || {}).value;
 }
 
+function getPath(name, root = "./src/components") {
+  return path.resolve(root, name, "variants.js");
+}
+
+const defs = {};
+
 function getComponent(name) {
   try {
-    let componentPath = path.resolve("./src/components", name, "variants.js");
+    let componentPath = getPath(name);
     if (!fs.existsSync(componentPath)) {
-      componentPath = path.resolve(
-        "./node_modules/smelte/src/components",
-        name,
-        "variants.js"
-      );
+      componentPath = getPath(name, "./node_modules/smelte/src/components");
     }
     return require(componentPath);
   } catch (e) {
@@ -33,8 +35,6 @@ function getComponent(name) {
     };
   }
 }
-
-const defs = {};
 
 function classesPerComponent(colors) {
   return Object.keys(colors).reduce((acc, component) => {
@@ -53,6 +53,7 @@ function classesPerComponent(colors) {
 module.exports = function extractor(content) {
   let ast;
   const usedColors = {};
+  const usedComponents = new Set();
 
   try {
     ast = parse(content);
@@ -61,13 +62,14 @@ module.exports = function extractor(content) {
   walk(ast, {
     enter: function(node) {
       const color = getProp(node, "color");
-      if (color && color[0].data) {
-        // TODO: variants for buttons
-        // const light = getProp(node, "light") ? "light" : null;
-        // const dark = getProp(node, "dark") ? "dark" : null;
 
+      if (node.type === "InlineComponent") {
+        usedComponents.add(node.name);
+      }
+
+      if (color && color[0].data) {
         if (!usedColors[node.name]) {
-          usedColors[node.name] = new Set(["primary", "white"]);
+          usedColors[node.name] = new Set(["primary", "white", "gray"]);
         }
 
         usedColors[node.name].add(color[0].data);
@@ -76,10 +78,15 @@ module.exports = function extractor(content) {
   });
 
   const fromClasses = content.match(/class:[A-Za-z0-9-_]+/g) || [];
+  const defaultComponentClasses =
+    content.match(/lasses = ("[a-zA-Z0-9-_ ]+")/g) || [];
 
   return [
     ...(content.match(/[A-Za-z0-9-_:\/]+/g) || []),
     ...fromClasses.map(c => c.replace("class:", "")),
-    ...flatten(classesPerComponent(usedColors))
+    ...flatten(classesPerComponent(usedColors)),
+    ...defaultComponentClasses.map(c =>
+      c.replace('lasses = "', "").replace('"', "")
+    )
   ];
 };

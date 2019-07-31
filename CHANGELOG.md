@@ -1,9 +1,26 @@
 # Smelte changelog
 
+# 0.1.0
+* Start API docs
+* Expose tailwind config
+* Add colors to chips
+* More consistent API
+* New props for data tables
+* Split docs components (props table and code)
+
+# 0.0.29
+* Better transparent variants
+* JS ripple animation
+* Yet better treeview
+* PurgeCSS preserve default component styles and styles from *Classes props
+
 # 0.0.28
 * Add transparent variant to all colors
 * Give ripple elements transparent hover
 * Fix outlined button hover
+* Add class builder to snackbars
+* Add position and color props to snackbar
+* Expose transition props on snackbars
 
 # 0.0.27
 * Add alias plugin
