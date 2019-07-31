@@ -2,7 +2,7 @@
   import { Chip } from "smelte";
   import { Snackbar } from "smelte";
   import { Button } from "smelte";
-  import Code from "components/Code";
+  import Code from "docs/Code.svelte";
 
   import chip from "examples/chip.txt";
   import chipOutlined from "examples/chip-outlined.txt";
@@ -14,7 +14,6 @@
 <h5 class="mt-6 mb-2">Basic</h5>
 <Chip
   icon="face"
-  removable
   selectable
   on:close={() => (closed = true)}
   on:click={() => (clicked = true)}>
@@ -40,6 +39,7 @@
   outlined
   removable
   selectable
+  color="blue"
   on:close={() => (closed = true)}
   on:click={() => (clicked = true)}>
   Dogs
@@ -49,6 +49,7 @@
   outlined
   removable
   selectable
+  color="yellow"
   on:close={() => (closed = true)}
   on:click={() => (clicked = true)}>
   Plants
@@ -58,6 +59,7 @@
   outlined
   removable
   selectable
+  color="teal"
   on:close={() => (closed = true)}
   on:click={() => (clicked = true)}>
   Parents

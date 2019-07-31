@@ -1,5 +1,5 @@
 <script>
-  import Code from "components/Code";
+  import Code from "docs/Code.svelte";
   import { List } from "smelte";
   import { Icon } from "smelte";
 
@@ -69,7 +69,7 @@
 <List bind:value={selected} items={menu} dense navigation>
   <li slot="item" let:item>
     <div
-      class="cursor-pointer ripple-secondary p-4 border-secondary-50 border my-2
+      class="cursor-pointer p-4 border-secondary-50 border my-2
       border-solid"
       on:click={() => (selected = item.text)}
       class:bg-secondary-50={selected === item.text}>
