@@ -1,9 +1,16 @@
 <script>
-  import { TextField, DataTable } from "smelte";
+  import TextField, { Label } from "components/TextField";
+  import DataTable from "components/DataTable";
   import Code from "docs/Code.svelte";
   import PropsTable from "docs/PropsTable.svelte";
   import textFields from "examples/text-fields.txt";
 </script>
+
+<blockquote
+  class="pl-8 mt-2 mb-10 border-l-8 border-primary-300 text-lg"
+  cite="https://material.io/components/text-fields/#">
+  <p>Text fields let users enter and edit text.</p>
+</blockquote>
 
 <h6 class="mb-3 mt-6">Basic</h6>
 <TextField label="Test label" />
@@ -47,8 +54,13 @@ like <span class="code-inline">max-length</span> or <span class="code-inline">ty
 <TextField label="Test label" outlined error="Test error" />
 <h6 class="mb-3 mt-6">Outlined textarea</h6>
 <TextField label="Test label" textarea rows="5" outlined />
-<h6 class="mb-3 mt-6">With basic validation</h6>
+<h6 class="mb-3 mt-6">With basic validation (type="number" min="10" max="100")</h6>
 <TextField label="Test label" outlined type="number" min="10" max="100" />
-
+<h6 class="mb-3 mt-6">With icon</h6>
+<TextField prepend="search" label="Icon before" />
+<TextField append="search" label="Icon after" />
+<h6 class="mb-3 mt-6">Disabled</h6>
+<TextField disabled prepend="search" label="Icon before" />
+<TextField disabled append="search" label="Icon after" />
 
 <Code code={textFields} />

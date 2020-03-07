@@ -8,21 +8,24 @@ import { ListItem } from "./components/List/";
 import Icon from "./components/Icon";
 import Menu from "./components/Menu";
 import NavigationDrawer from "./components/NavigationDrawer";
-import Checkbox from "./components/Checkbox";
-import RadioButton from "./components/RadioButton";
+import Checkbox, { Label as SelectionLabel } from "./components/Checkbox";
+import RadioButtonGroup, { RadioButton } from "./components/RadioButton";
 import AppBar from "./components/AppBar";
 import Select from "./components/Select";
 import ProgressLinear from "./components/ProgressLinear";
 import ProgressCircular from "./components/ProgressCircular";
 import Slider from "./components/Slider";
-import Snackbar from "./components/Snackbar";
+import Snackbar, { notifier, Notifications } from "./components/Snackbar";
 import { TabButton, Tab, Tabs } from "./components/Tabs";
-import TextField from "./components/TextField";
+import TextField, { Label } from "./components/TextField";
 import DataTable from "./components/DataTable";
 import Switch from "./components/Switch";
 import Tooltip from "./components/Tooltip";
 import Treeview from "./components/Treeview";
 import Ripple from "./components/Ripple";
+import DatePicker from "./components/DatePicker";
+import breakpoints from "./breakpoints";
+import notificationQueue from "./notification-queue";
 
 export { Scrim, Spacer } from "./components/Util";
 
@@ -33,10 +36,13 @@ export {
   Dialog,
   Image,
   Checkbox,
+  SelectionLabel,
   RadioButton,
+  RadioButtonGroup,
   List,
   ListItem,
   Menu,
+  Label,
   NavigationDrawer,
   Icon,
   ProgressLinear,
@@ -53,5 +59,10 @@ export {
   Treeview,
   Switch,
   Tooltip,
-  Ripple
+  Ripple,
+  DatePicker,
+  breakpoints,
+  notifier,
+  notificationQueue,
+  Notifications
 };

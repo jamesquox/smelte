@@ -1,7 +1,7 @@
 <script>
-  import { Chip } from "smelte";
-  import { Snackbar } from "smelte";
-  import { Button } from "smelte";
+  import Chip from "components/Chip";
+  import Button from "components/Button";
+  import Snackbar from "components/Snackbar";
   import Code from "docs/Code.svelte";
 
   import chip from "examples/chip.txt";
@@ -49,7 +49,7 @@
   outlined
   removable
   selectable
-  color="yellow"
+  color="alert"
   on:close={() => (closed = true)}
   on:click={() => (clicked = true)}>
   Plants
@@ -59,7 +59,7 @@
   outlined
   removable
   selectable
-  color="teal"
+  color="secondary"
   on:close={() => (closed = true)}
   on:click={() => (clicked = true)}>
   Parents

@@ -1,12 +1,12 @@
 <script>
-  import { Button } from "smelte";
-  import { Menu } from "smelte";
-  import { List } from "smelte";
-  import { Select } from "smelte";
-  import { Icon } from "smelte";
-  import { TextField } from "smelte";
+  import Button from "components/Button";
+  import Menu from "components/Menu";
+  import List from "components/List";
+  import Select from "components/Select";
+  import Icon from "components/Icon";
+  import TextField from "components/TextField";
+  import Slider from "components/Slider";
   import Code from "docs/Code.svelte";
-  import { Slider } from "smelte";
 
   import menus from "examples/menus.txt";
 
@@ -23,7 +23,7 @@
   ];
 </script>
 
-<caption>Selected: {selected || 'nothing'}</caption>
+<small>Selected: {selected || 'nothing'}</small><br>
 
 <Menu bind:open {items} bind:value={selected}>
   <div slot="activator">

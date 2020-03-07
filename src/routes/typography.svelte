@@ -8,9 +8,8 @@
       href="https://material.io/design/typography/the-type-system.html#type-scale">
       type scale
     </a>
-    .
   </p>
-  <div class="bg-gray-200 p-4 my-4">
+  <div class="bg-gray-200 dark:bg-dark-700 p-4 my-4">
     <h1>.h1 header 1</h1>
     <h2>.h2 header 2</h2>
     <h3>.h3 header 3</h3>
@@ -21,7 +20,7 @@
     <div class="subtitle-2">.subtitle-2</div>
     <div class="body-1">.body-1</div>
     <div class="body-2">.body-2</div>
-    <caption>.caption</caption>
+    <small>.caption</small>
   </div>
 
 </div>

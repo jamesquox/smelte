@@ -30,6 +30,10 @@ export class ClassBuilder {
     return this;
   }
 
+  extend(...fns) {
+    return this;
+  }
+
   get() {
     return this.classes;
   }
@@ -67,7 +71,7 @@ export class ClassBuilder {
         this.classes += ` ${className} `;
         return this;
       case "function":
-        this.classes += ` ${className(defaultValue)} `;
+        this.classes += ` ${className(defaultValue || this.classes)} `;
         return this;
     }
   }
