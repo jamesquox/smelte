@@ -2,18 +2,16 @@
 function ripple(color, centered) {
   return function(event) {
     const target = event.currentTarget;
-    const circle = document.createElement("div");
+    const circle = document.createElement("span");
     const d = Math.max(target.clientWidth, target.clientHeight);
 
     const removeCircle = () => {
-      circle.removeEventListener("animationend", removeCircle);
       circle.remove();
+      circle.removeEventListener("animationend", removeCircle);
     };
 
     circle.addEventListener("animationend", removeCircle);
     circle.style.width = circle.style.height = `${d}px`;
-    target.appendChild(circle);
-
     const rect = target.getBoundingClientRect();
 
     if (centered) {
@@ -32,6 +30,8 @@ function ripple(color, centered) {
     }
 
     circle.classList.add("ripple");
+
+    target.appendChild(circle);
   };
 }
 

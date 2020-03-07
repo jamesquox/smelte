@@ -1,6 +1,6 @@
 <script>
-  import { ProgressLinear } from "smelte";
-  import { ProgressCircular } from "smelte";
+  import ProgressLinear from "components/ProgressLinear";
+  import ProgressCircular from "components/ProgressLinear";
 
   import Code from "docs/Code.svelte";
   import indicators from "examples/progress-indicators.txt";
@@ -26,7 +26,7 @@
 
 <h5 class="pt-6 pb-4">Definite linear progress indicator</h5>
 
-<caption class="mb-3">{progress}%</caption>
+<small class="mb-3">{progress}%</small>
 <ProgressLinear {progress} />
 
 <h5 class="pt-6 pb-4">Indefinite circular progress indicator</h5>
@@ -34,7 +34,7 @@
 
 <h5 class="pt-6 pb-4">Definite circular progress indicator</h5>
 
-<caption class="mb-3">{progress}%</caption>
+<small class="mb-3">{progress}%</small>
 <ProgressCircular {progress} />
 
 <Code code={indicators} />

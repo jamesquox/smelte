@@ -5,6 +5,7 @@
   export let xs = false;
   export let reverse = false;
   export let tip = false;
+  export let color = "default";
 </script>
 
 <style>
@@ -19,10 +20,12 @@
 
 <i
   aria-hidden="true"
-  class="material-icons {className} transition"
+  class="material-icons icon text-xl {className} transition"
   class:reverse
   class:tip
+  on:click
   class:text-base={small}
-  class:text-xs={xs}>
+  class:text-xs={xs}
+  style={color ? `color: ${color}` : ''}>
   <slot />
 </i>

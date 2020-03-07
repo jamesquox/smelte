@@ -17,13 +17,17 @@ export const navMenu = [
   { to: "/components/data-tables", text: "Data tables" },
   { to: "/components/tooltips", text: "Tooltips" },
   { to: "/components/treeviews", text: "Treeviews" },
-  { to: "/examples/search-bar", text: "Search bar" },
+  { to: "/components/date-pickers", text: "Date pickers" },
   { to: "/typography", text: "Typography" },
-  { to: "/color", text: "Color" }
+  { to: "/color", text: "Color" },
+  { to: "/breakpoints", text: "Breakpoints" },
+  { to: "/dark-mode", text: "Dark mode" }
 ];
 
 export const topMenu = [
   { to: "/components", text: "Components" },
   { to: "/typography", text: "Typography" },
-  { to: "/color", text: "Color" }
+  { to: "/color", text: "Color" },
+  { to: "/breakpoints", text: "Breakpoints" },
+  { to: "/dark-mode", text: "Dark mode" }
 ];

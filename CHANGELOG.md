@@ -1,5 +1,61 @@
 # Smelte changelog
 
+# 0.1.18
+* Refactor out Label component
+
+# 0.1.17
+* Dispatch select on any tree view item
+* Bump waypoint
+
+# 0.1.16
+* Propagate treeview events in nested items
+* Add persistent prop to dialogs
+
+# 0.1.15
+* Refactor navigation drawer
+* Export breakpoints store, add breakpoints page
+
+# 0.1.13
+* Remove unused PostCSS config section
+* Add code examples to sliders and selection controls
+* Remove `@apply` where possible
+* Remove `extend` from tailwind config
+* Put tailwind utilities import after `@apply` classes
+* Fix setting font size class to icon
+
+# 0.1.11
+* Fix drawer docs
+
+# 0.1.10
+* Supress sapper warning messages
+
+# 0.1.8
+* Fix ripple on fab buttons and chips on mobile
+
+# 0.1.7
+* Fix ripple div not getting removed after animation
+
+# 0.1.6
+* Add/replace/remove to chips
+* Add anchor to buttons
+
+# 0.1.5
+* Fix jerkiness in expanding treeview
+* Add code example to treeview
+
+# 0.1.4
+* Fix treeview
+* Add notSelectedColor prop to icon
+
+# 0.1.3
+* Update dependencies
+* Fix pagination in the data table
+
+# 0.1.2
+* Upgrade svelte
+* Fix bugs from upgrading svelte
+* Empty select item
+
 # 0.1.0
 * Start API docs
 * Expose tailwind config

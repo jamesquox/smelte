@@ -7,27 +7,26 @@ import { terser } from "rollup-plugin-terser";
 import { string } from "rollup-plugin-string";
 import json from "rollup-plugin-json";
 import config from "sapper/config/rollup.js";
-import getPreprocessor from "svelte-preprocess";
-import postcss from "rollup-plugin-postcss";
 import includePaths from "rollup-plugin-includepaths";
 import alias from "rollup-plugin-alias";
-import path from "path";
+
 const mode = process.env.NODE_ENV;
 const dev = mode === "development";
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
-const preprocess = getPreprocessor({
-  transformers: {
-    postcss: {
-      plugins: require("./postcss.config.js")()
-    }
-  }
-});
+const smelte = require("./rollup-plugin-smelte");
+
+const onwarn = (warning, onwarn) =>
+  (warning.code === "CIRCULAR_DEPENDENCY" &&
+    /[/\\]@sapper[/\\]/.test(warning.message)) ||
+  warning.message.includes("Use of eval is strongly discouraged") ||
+  onwarn(warning);
 
 export default {
   client: {
     input: config.client.input(),
     output: config.client.output(),
+    onwarn,
     plugins: [
       replace({
         "process.browser": true,
@@ -41,10 +40,9 @@ export default {
       }),
       svelte({
         dev,
-        hydratable: true,
-        emitCss: true,
-        preprocess
+        hydratable: true
       }),
+      !dev && smelte(),
       resolve(),
       commonjs(),
       includePaths({ paths: ["./src", "./"] }),
@@ -63,26 +61,15 @@ export default {
       legacy &&
         babel({
           extensions: [".js", ".mjs", ".html", ".svelte"],
-          // runtimeHelpers: true,
           exclude: ["node_modules/@babel/**"],
           presets: [
             [
               "@babel/preset-env",
               {
                 targets: "> 0.25%"
-                // , ie >= 11, not dead
               }
             ]
           ]
-          // plugins: [
-          //   "@babel/plugin-syntax-dynamic-import",
-          //   [
-          //     "@babel/plugin-transform-runtime",
-          //     {
-          //       useESModules: true
-          //     }
-          //   ]
-          // ]
         }),
 
       !dev &&
@@ -95,6 +82,7 @@ export default {
   server: {
     input: config.server.input(),
     output: config.server.output(),
+    onwarn,
     plugins: [
       replace({
         "process.browser": false,
@@ -105,8 +93,31 @@ export default {
       }),
       svelte({
         generate: "ssr",
-        dev,
-        preprocess
+        dev
+      }),
+      smelte({
+        purge: !dev,
+        tailwind: {
+          theme: {
+            extend: {
+              spacing: {
+                72: "18rem",
+                84: "21rem",
+                96: "24rem"
+              }
+            }
+          }
+        },
+        whitelistPatterns: [
+          // for Prismjs code highlighting
+          /language/,
+          /namespace/,
+          /token/,
+          // for JS ripple
+          /ripple/,
+          // date picker
+          /w\-.\/7/
+        ]
       }),
       string({
         include: "**/*.txt"
@@ -114,11 +125,7 @@ export default {
       resolve(),
       alias({ smelte: "src/index.js" }),
       includePaths({ paths: ["./src", "./"] }),
-      commonjs(),
-      postcss({
-        plugins: require("./postcss.config.js")(!dev),
-        extract: path.resolve(__dirname, "./static/global.css")
-      })
+      commonjs()
     ],
     external: [].concat(
       require("module").builtinModules ||

@@ -1,5 +1,5 @@
 <script>
-  import { DataTable } from "smelte";
+  import DataTable from "components/DataTable";
   import Code from "docs/Code.svelte";
   import table from "examples/table.txt";
 
@@ -7,6 +7,8 @@
   let loading = true;
 
   async function getData() {
+    if (typeof window === "undefined") return;
+
     loading = true;
     const res = await fetch("data.json");
     const body = await res.json();

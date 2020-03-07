@@ -1,16 +1,18 @@
 <script>
-  import { Card} from "smelte";
-  import { Button } from "smelte";
-  import { Image } from "smelte";
+  import Card from "../../components/Card";
+  import Button from "../../components/Button";
+  import Image from "../../components/Image";
 
   import Code from "docs/Code.svelte";
+  import PropsTable from "docs/PropsTable.svelte";
 
   import card from "examples/card.txt";
 </script>
 
-<Card.Card>
+<Card.Card class="dark:bg-gray-200">
   <div slot="title">
     <Card.Title
+      class="dark:text-black"
       title="The three little kittens"
       subheader="A kitten poem"
       avatar="https://placekitten.com/64/64" />
@@ -34,5 +36,14 @@
     </div>
   </div>
 </Card.Card>
+
+<PropsTable
+  data={[
+    { prop: "hover", default: "true", description: "Enable hover elevation", type: "Boolean" },
+    { prop: "elevation", default: "1", description: "Default elevation value", type: "Number" },
+    { prop: "hoverElevation", default: "8", description: "Hover elevation value", type: "Number" },
+    { prop: "classes", default: `rounded inline-flex flex-col overflow-hidden transition`, description: "String of root element classes", type: "String" },
+  ]}
+/>
 
 <Code code={card} />

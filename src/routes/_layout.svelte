@@ -1,53 +1,73 @@
 <script>
+  import AppBar from "components/AppBar";
+  import Tabs from "components/Tabs";
+  import Button from "components/Button";
+  import { Spacer } from "components/Util";
+  import List, { ListItem } from "components/List";
+  import NavigationDrawer from "components/NavigationDrawer";
+  import ProgressLinear from "components/ProgressLinear";
+  import Tooltip from "components/Tooltip";
   import { stores } from "@sapper/app";
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
-
-  import { AppBar } from "smelte";
-  import { Tabs } from "smelte";
-  import { Button } from "smelte";
-  import { Spacer } from "smelte";
-  import { List } from "smelte";
-  import { ListItem } from "smelte";
-  import { NavigationDrawer } from "smelte";
-  import { ProgressLinear } from "smelte";
   import { navMenu, topMenu } from "../utils/menu.js";
-
-  import {
-    right,
-    elevation,
-    persistent,
-    showNav,
-    showNavMobile,
-    breakpoint
-  } from "stores.js";
+  import { right, elevation, persistent, showNav } from "stores.js";
+  import dark from "../dark.js";
 
   const { preloading, page } = stores();
 
   let selected = "";
-  const bp = breakpoint();
+
+  const darkMode = dark();
+
   $: path = $page.path;
 </script>
 
-{#each navMenu as link}
-  <a href={link.to} class="hidden">{link.text}</a>
-{/each}
+<style>
+  .github {
+    transition: 0.3s ease-out;
+  }
+  .github:hover {
+    transform: rotate(360deg);
+  }
+</style>
 
 <svelte:head>
   <title>Smelte: Material design using Tailwind CSS for Svelte</title>
+  <meta
+    name="description"
+    content="Smelte: UI framework with very small footprint" />
 </svelte:head>
 
 {#if $preloading}
   <ProgressLinear app />
 {/if}
 
-<AppBar>
+{#each navMenu as link}
+  <a href={link.to} class="hidden">{link.text}</a>
+{/each}
+
+<AppBar class={i => i.replace('primary-300', 'dark-600')}>
   <a href="." class="px-2 md:px-8 flex items-center">
     <img src="/logo.png" alt="Smelte logo" width="44" />
     <h6 class="pl-3 text-white tracking-widest font-thin text-lg">SMELTE</h6>
   </a>
   <Spacer />
   <Tabs navigation items={topMenu} bind:selected={path} />
+
+  <Tooltip>
+    <span slot="activator">
+      <Button
+        bind:value={$darkMode}
+        icon="wb_sunny"
+        small
+        flat
+        remove="p-1 h-4 w-4"
+        iconClass="text-white"
+        text />
+    </span>
+    {$darkMode ? 'Disable' : 'Enable'} dark mode
+  </Tooltip>
   <div class="md:hidden">
     <Button
       icon="menu"
@@ -55,52 +75,53 @@
       flat
       remove="p-1 h-4 w-4"
       iconClass="text-white"
-      iconClasses={i => i.replace('p-4', 'p-3').replace('m-4', 'm-3')}
       text
-      on:click={() => showNavMobile.set(!$showNavMobile)} />
+      on:click={() => showNav.set(!$showNav)} />
   </div>
-  <a href="https://github.com/matyunya/smelte" class="px-4">
+  <a href="https://github.com/matyunya/smelte" class="px-4 github">
     <img src="/github.png" alt="Github Smelte" width="24" height="24" />
   </a>
 </AppBar>
 
-{#if $bp}
-  <main
-    class="container relative p-8 lg:max-w-3xl lg:ml-64 mx-auto mb-10 mt-24
-    md:ml-56 md:max-w-md md:px-3"
-    transition:fade={{ duration: 300 }}>
-    <NavigationDrawer
-      bind:showDesktop={$showNav}
-      bind:showMobile={$showNavMobile}
-      right={$right}
-      persistent={$persistent}
-      elevation={$elevation}
-      breakpoint={$bp}>
-      <h6 class="p-6 ml-1 pb-2 text-xs text-gray-900">Components</h6>
-      <List items={navMenu}>
-        <span slot="item" let:item class="cursor-pointer">
-          {#if item.to === '/examples/search-bar'}
-            <hr />
-            <h6 class="p-6 ml-1 py-2 text-xs text-gray-900">Examples</h6>
-          {/if}
-          {#if item.to === '/typography'}
-            <hr />
-            <h6 class="p-6 ml-1 py-2 text-xs text-gray-900">Utilities</h6>
-          {/if}
+<main
+  class="relative p-8 lg:max-w-3xl mx-auto mb-10 mt-24 md:ml-64 md:pl-16
+  md:max-w-md md:px-3"
+  transition:fade={{ duration: 300 }}>
+  <NavigationDrawer
+    bind:show={$showNav}
+    right={$right}
+    persistent={$persistent}
+    elevation={$elevation}>
+    <h6
+      class="px-3 ml-1 pb-2 pt-8 text-sm text-gray-900 font-light
+      dark:text-gray-100">
+      Components
+    </h6>
+    <List items={navMenu}>
+      <span slot="item" let:item class="cursor-pointer">
+        {#if item.to === '/typography'}
+          <hr class="mt-4" />
+          <h6
+            class="px-3 ml-1 pb-2 pt-8 text-sm text-gray-900 font-light
+            dark:text-gray-100">
+            Utilities
+          </h6>
+        {/if}
 
-          <a href={item.to}>
-            <ListItem
-              selected={path.includes(item.to)}
-              selectedClasses="bg-primary-trans hover:bg-primary-trans"
-              {...item}
-              dense
-              navigation />
-          </a>
-        </span>
-      </List>
-      <hr />
-    </NavigationDrawer>
+        <a href={item.to}>
+          <ListItem
+            id={item.id}
+            text={item.text}
+            to={item.to}
+            selected={path.includes(item.to)}
+            dense
+            selectedClasses="bg-primary-transDark dark:bg-primary-transLight
+            hover:bg-primary-transDark dark-hover:bg-primary-transLight" />
+        </a>
+      </span>
+    </List>
+    <hr />
+  </NavigationDrawer>
 
-    <slot />
-  </main>
-{/if}
+  <slot />
+</main>

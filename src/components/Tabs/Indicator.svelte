@@ -1,7 +1,6 @@
 <script>
   import { slide } from "svelte/transition";
-  import utils, { ClassBuilder, filterProps } from "../../utils/classes.js";
-
+  import utils from "../../utils/classes.js";
 
   export let width = 0;
   export let left = 0;

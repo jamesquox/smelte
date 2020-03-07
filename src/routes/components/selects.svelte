@@ -1,10 +1,11 @@
 <script>
-  import { Select } from "smelte";
-  import { Button } from "smelte";
+  import Select from "components/Select";
+  import TextField from "components/TextField";
+  import Card from "components/Card";
+  import Checkbox from "components/Checkbox";
   import Code from "docs/Code.svelte";
-  import { Checkbox } from "smelte";
-  import { Card} from "smelte";
   import selects from "examples/selects.txt";
+  import Button from "components/Button";
 
   let value1 = "";
   let value2 = "";
@@ -13,11 +14,13 @@
 
   let showList = false;
 
+  let error = "";
+
   let items = [
-    { value: 1, text: "Select Item 1" },
-    { value: 2, text: "Select Item 2" },
-    { value: 3, text: "Select Item 3" },
-    { value: 4, text: "Select Item 4" },
+    { value: 1, text: "One" },
+    { value: 2, text: "Two" },
+    { value: 3, text: "Three" },
+    { value: 4, text: "Four" },
   ];
   $: itemsLabel = items.map(i => i.text).join(", ");
 
@@ -39,7 +42,7 @@
   <span class="code-inline">on:change</span>
   event.
 </p>
-<caption>Selected: {value1 || 'nothing'}</caption>
+<small>Selected: {value1 || 'nothing'}</small>
 <Select {label} {items} on:change={v => (value1 = v.detail)} />
 
 <p>
@@ -58,14 +61,14 @@ Updates when the underlying items change
   <span class="code-inline">on:value</span>
   .
 </p>
-<caption>Selected: {value2 || 'nothing'}</caption>
+<small>Selected: {value2 || 'nothing'}</small>
 <Select color="success" bind:value={value2} {label} {items} />
 
 <p>Select may be outlined.</p>
 <Select bind:value={value2} outlined {label} {items} />
 
 <p>Select may even be an autocomplete search component.</p>
-<caption>Selected: {value3 || 'nothing'}</caption>
+<small>Selected: {value3 || 'nothing'}</small>
 <Select bind:value={value3} outlined autocomplete {label} {items} />
 
 <p>Custom options slot</p>
@@ -73,9 +76,9 @@ Updates when the underlying items change
 <Select
   {selectedLabel}
   outlined
-  color="red"
+  color="error"
   inputClasses={i => i.replace('rounded-t', 'rounded-full')}
-  appendClasses={i => i.replace('text-gray-700', 'text-red-700')}
+  appendClasses={i => i.replace('text-gray-700', 'text-error-700')}
   label="Categories"
   {items}
 >
@@ -84,10 +87,16 @@ Updates when the underlying items change
         <Checkbox
           value={selectedItems.includes(item)}
           class="block my-2"
-          color="red"
+          color="error"
           label={item.text}
           on:change={toggle(item)}
         />
       {/each}
   </div>
 </Select>
+
+<p>With error message</p>
+
+<TextField label="Error" bind:value={error} />
+
+<Select bind:value={value4} outlined autocomplete {label} {items} {error} />
